@@ -11,6 +11,10 @@
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
   },
+  // Diperlukan oleh `wrangler preview` (Worker Previews) yang digunakan oleh
+  // Workers Builds untuk deployment bukan production. Blok kosong dibenarkan;
+  // assets dan compatibility_date kekal di peringkat atas.
+  "previews": {},
   "observability": {
     "enabled": true
   }

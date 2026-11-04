@@ -135,10 +135,14 @@ ROSTER_BASE_URL=https://script.google.com/macros/s/.../exec
 4. Tetapan build:
    - **Build command:** `npm run check`
    - **Deploy command:** `npm run deploy`
-   - **Non-production branch deploy command:** biarkan lalai
-     (`npx wrangler versions upload`)
+   - **Non-production branch deploy command:** `npx wrangler preview`
 5. Simpan dan deploy. Nama Worker dalam dashboard mesti `jadualot`, sama
    dengan `name` dalam `wrangler.jsonc`.
+
+`npx wrangler preview` menggunakan Worker Previews dan memerlukan blok
+`"previews": {}` dalam `wrangler.jsonc` (sudah disertakan). Jika anda menukar
+arahan deploy bukan production kepada `npx wrangler versions upload`, blok itu
+tidak diperlukan.
 
 Setiap branch selain `main` menghasilkan URL pratonton Workers Builds dan komen
 PR. Uji `https://<preview-url>/api/roster?period=2026-11` sebelum merge.
