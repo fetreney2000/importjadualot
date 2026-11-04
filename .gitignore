@@ -1,2 +1,6 @@
 node_modules/
 .netlify/
+shots/
+.env
+*.log
+.DS_Store

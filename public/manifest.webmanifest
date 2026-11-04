@@ -1,1 +1,15 @@
-{"name":"Jadual OT SPPS-KLM","short_name":"Jadual OT","start_url":".","display":"standalone","background_color":"#17324d","theme_color":"#17324d","description":"Roster kerja lebih masa SPPS-KLM — paparan mesra telefon.","icons":[{"src":"favicon.svg","sizes":"any","type":"image/svg+xml"}]}
+{
+  "name": "JadualOT — Roster Kerja Lebih Masa",
+  "short_name": "JadualOT",
+  "description": "Paparan roster kerja lebih masa SPPS-KLM. Mesra telefon, pantas dan jelas.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f7f9",
+  "theme_color": "#0e1015",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

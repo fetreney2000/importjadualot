@@ -1,0 +1,35 @@
+{
+  "name": "jadualot",
+  "version": "2.0.0",
+  "private": true,
+  "description": "JadualOT — paparan roster kerja lebih masa SPPS-KLM. Tapak statik mobile-first dalam public/ dengan satu Netlify Function sebagai proksi data.",
+  "scripts": {
+    "preview": "node tools/preview.cjs",
+    "check": "node tools/check-frontend.cjs",
+    "test": "node tools/check-frontend.cjs",
+    "shots": "node tools/shots.cjs",
+    "data:refresh": "node tools/fetch-periods.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fetreney2000/importjadualot.git"
+  },
+  "keywords": [
+    "roster",
+    "jadual",
+    "netlify",
+    "spps-klm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fetreney2000/importjadualot/issues"
+  },
+  "homepage": "https://github.com/fetreney2000/importjadualot#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}
