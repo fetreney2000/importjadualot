@@ -114,7 +114,7 @@ async function fetchWithTimeout(url, ms) {
  * Ambil roster yang sudah dihuraikan, menggunakan Cache API Cloudflare.
  * Cache menyimpan JSON bersih (bukan wrapper) selama CACHE_TTL_SECONDS.
  */
-async function loadRoster(period, base, ctx) {
+async function loadRoster(period, base) {
   const cache = typeof caches !== 'undefined' ? caches.default : null;
   const cacheKey = `${CACHE_ORIGIN}/roster/v1/${period || 'latest'}?src=${encodeURIComponent(base)}`;
 
@@ -160,9 +160,13 @@ async function loadRoster(period, base, ctx) {
         'Cache-Control': `public, max-age=${CACHE_TTL_SECONDS}`,
       },
     });
-    const put = cache.put(cacheKey, cached).catch(() => {});
-    if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(put);
-    else await put;
+    // Tunggu put selesai supaya permintaan seterusnya terus mendapat HIT.
+    // I/O cache tidak dikira dalam had CPU Worker.
+    try {
+      await cache.put(cacheKey, cached);
+    } catch {
+      // Kegagalan cache tidak sepatutnya menggagalkan respons.
+    }
   }
 
   return { payload, cacheStatus: 'MISS' };
@@ -172,9 +176,8 @@ async function loadRoster(period, base, ctx) {
  * Pengendali /api/roster.
  * @param {Request} request
  * @param {{ ROSTER_BASE_URL?: string }} env
- * @param {{ waitUntil?: (p: Promise<unknown>) => void }} ctx
  */
-export async function handleRoster(request, env = {}, ctx = {}) {
+export async function handleRoster(request, env = {}) {
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: JSON_HEADERS });
   }
@@ -197,7 +200,7 @@ export async function handleRoster(request, env = {}, ctx = {}) {
 
   try {
     const base = (env.ROSTER_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, '');
-    const { payload, cacheStatus } = await loadRoster(period, base, ctx);
+    const { payload, cacheStatus } = await loadRoster(period, base);
     const body = JSON.stringify(payload);
     return new Response(request.method === 'HEAD' ? null : body, {
       status: 200,

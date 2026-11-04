@@ -17,7 +17,7 @@ export default {
     const path = url.pathname.replace(/\/+$/, '') || '/';
 
     if (path === '/api/roster') {
-      return handleRoster(request, env, ctx);
+      return handleRoster(request, env);
     }
 
     if (path === '/api' || path.startsWith('/api/')) {
