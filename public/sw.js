@@ -63,7 +63,17 @@ const OFFLINE_HTML = `<!doctype html>
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const shell = await caches.open(SHELL_CACHE);
-    await shell.addAll(SHELL_ASSETS.map((url) => new Request(url, { cache: 'reload' })));
+
+    // Pemasangan tidak boleh atomik: satu aset 404/503 tidak sepatutnya
+    // membatalkan seluruh install dan menghalang data sandaran dicache.
+    // Setiap aset dicache secara berasingan; kegagalan dilaporkan tetapi
+    // tidak menghalang activation.
+    const results = await Promise.allSettled(
+      SHELL_ASSETS.map((url) => shell.add(new Request(url, { cache: 'reload' }))),
+    );
+    const failed = SHELL_ASSETS.filter((_, i) => results[i].status === 'rejected');
+    if (failed.length) console.warn('SW: aset shell gagal dicache:', failed.join(', '));
+
     await precacheData();
     await self.skipWaiting();
   })());
