@@ -92,7 +92,8 @@ ROSTER_BASE_URL=https://script.google.com/macros/s/.../exec
 4. Tetapan build:
    - **Build command:** `npm run check`
    - **Deploy command:** `npm run deploy`
-   - **Preview command:** biarkan lalai (`npx wrangler versions upload`)
+   - **Non-production branch deploy command:** biarkan lalai
+     (`npx wrangler versions upload`)
 5. Simpan dan deploy. Nama Worker dalam dashboard mesti `jadualot`, sama
    dengan `name` dalam `wrangler.jsonc`.
 
