@@ -3,13 +3,35 @@ const puppeteer = require('puppeteer-core');
 const path = require('path');
 const fs = require('fs');
 
-const EDGE = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const OUT = path.join(__dirname, '..', 'shots');
+const URL_APP = process.env.PREVIEW_URL || 'http://localhost:4173/';
+
+// Cari Chromium merentas platform; CHROME_PATH mengatasi semua.
+const BROWSERS = [
+  process.env.CHROME_PATH,
+  process.env.PUPPETEER_EXECUTABLE_PATH,
+  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+  'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+  'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+  'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+  '/usr/bin/chromium',
+  '/usr/bin/chromium-browser',
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+  '/Applications/Chromium.app/Contents/MacOS/Chromium',
+].filter(Boolean);
+const executablePath = BROWSERS.find((file) => fs.existsSync(file));
+if (!executablePath) {
+  console.error('Pelayar Chromium tidak ditemui. Tetapkan CHROME_PATH kepada laluan pelayar.');
+  process.exit(1);
+}
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await puppeteer.launch({
-    executablePath: EDGE,
+    executablePath,
     headless: 'new',
     args: ['--no-sandbox', '--disable-gpu', '--hide-scrollbars', '--font-render-hinting=none'],
     defaultViewport: { width: 390, height: 844, deviceScaleFactor: 2 },
@@ -19,7 +41,7 @@ const OUT = path.join(__dirname, '..', 'shots');
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push('PAGEERROR: ' + e.message));
 
-  const url = 'http://localhost:4173/';
+  const url = URL_APP;
   await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
   await page.waitForSelector('.shift', { timeout: 15000 });
   await new Promise((r) => setTimeout(r, 700));
@@ -38,10 +60,11 @@ const OUT = path.join(__dirname, '..', 'shots');
     searchVisible: !!document.querySelector('#searchInput')?.offsetParent,
     unitsHidden: document.getElementById('unitChips').hidden,
   }));
-  await page.type('#searchInput', 'FETRE');
+  // Carian mesti tidak sensitif huruf besar/kecil.
+  await page.type('#searchInput', 'fetre');
   await new Promise((r) => setTimeout(r, 450));
   const searchNames = await page.$$eval('.staff-name', (ns) => ns.map((n) => n.textContent.trim()));
-  const searchOk = searchNames.length > 0 && searchNames.every((n) => n.includes('FETRE'));
+  const searchOk = searchNames.length > 0 && searchNames.every((n) => n.toUpperCase().includes('FETRE'));
   await page.evaluate(() => {
     const input = document.getElementById('searchInput');
     input.value = '';

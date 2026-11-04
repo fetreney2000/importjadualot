@@ -11,6 +11,8 @@
 // Kegunaan: GET /api/roster?period=2026-11
 // Env pilihan: ROSTER_BASE_URL (default di bawah)
 
+import { parseRosterWrapper, rosterEnvelope } from '../shared/roster-parse.js';
+
 const DEFAULT_BASE_URL =
   'https://script.google.com/macros/s/AKfycbzVl943vS3gzgALWFxT3r645KDXwnjPnoVPhTWqo1X3lWXwWEmX0F7riJd5vc4__xkj/exec';
 
@@ -18,84 +20,25 @@ const PERIOD_RE = /^\d{4}-\d{2}$/;
 const CACHE_TTL_SECONDS = 300;
 const CACHE_ORIGIN = 'https://jadualot.internal';
 
-const JSON_HEADERS = {
+/** Header keselamatan yang dikongsi oleh semua respons Worker. */
+export const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'DENY',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+};
+
+/** Header standard untuk respons JSON /api/*. */
+export const API_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
-  'X-Content-Type-Options': 'nosniff',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Max-Age': '86400',
+  ...SECURITY_HEADERS,
 };
-
-/** Menyahkod isi literal rentetan JS (tanpa tanda petik luar). */
-function decodeJsString(s) {
-  let out = '';
-  for (let i = 0; i < s.length; i += 1) {
-    const c = s[i];
-    if (c !== '\\') {
-      out += c;
-      continue;
-    }
-    const n = s[i + 1];
-    if (n === undefined) break;
-    if (n === 'x') {
-      const hex = s.slice(i + 2, i + 4);
-      if (/^[0-9a-fA-F]{2}$/.test(hex)) {
-        out += String.fromCharCode(parseInt(hex, 16));
-        i += 3;
-      } else {
-        out += n;
-        i += 1;
-      }
-    } else if (n === 'u') {
-      const hex = s.slice(i + 2, i + 6);
-      if (/^[0-9a-fA-F]{4}$/.test(hex)) {
-        out += String.fromCharCode(parseInt(hex, 16));
-        i += 5;
-      } else {
-        out += n;
-        i += 1;
-      }
-    } else if (n === 'n') { out += '\n'; i += 1; }
-    else if (n === 'r') { out += '\r'; i += 1; }
-    else if (n === 't') { out += '\t'; i += 1; }
-    else if (n === 'b') { out += '\b'; i += 1; }
-    else if (n === 'f') { out += '\f'; i += 1; }
-    else if (n === 'v') { out += '\v'; i += 1; }
-    else if (n === '0') { out += '\0'; i += 1; }
-    else if (n === '"' || n === "'" || n === '\\' || n === '/') { out += n; i += 1; }
-    else if (n === '\n') { i += 1; /* sambungan baris */ }
-    else { out += n; i += 1; }
-  }
-  return out;
-}
-
-/** Menyekstrak objek JSON selepas `const DATA = {...};` dengan pengimbas seimbang. */
-function extractDataJson(html) {
-  const key = 'const DATA =';
-  const ki = html.indexOf(key);
-  if (ki === -1) throw new Error('const DATA tidak ditemui dalam userHtml');
-  const start = html.indexOf('{', ki + key.length);
-  if (start === -1) throw new Error('objek DATA tidak ditemui');
-  let depth = 0;
-  let inStr = null;
-  let esc = false;
-  for (let i = start; i < html.length; i += 1) {
-    const c = html[i];
-    if (inStr) {
-      if (esc) esc = false;
-      else if (c === '\\') esc = true;
-      else if (c === inStr) inStr = null;
-    } else if (c === '"' || c === "'") {
-      inStr = c;
-    } else if (c === '{') {
-      depth += 1;
-    } else if (c === '}') {
-      depth -= 1;
-      if (depth === 0) return html.slice(start, i + 1);
-    }
-  }
-  throw new Error('JSON DATA tidak seimbang');
-}
 
 async function fetchWithTimeout(url, ms) {
   const ctrl = new AbortController();
@@ -134,24 +77,8 @@ async function loadRoster(period, base) {
   const res = await fetchWithTimeout(url, 20000);
   if (!res.ok) throw new Error(`Sumber roster menjawab ${res.status}`);
   const wrapper = await res.text();
-
-  const marker = 'goog.script.init("';
-  const si = wrapper.indexOf(marker);
-  if (si === -1) throw new Error('Pembungkus Apps Script tidak dijangka (init tidak ditemui)');
-  const start = si + marker.length;
-  const endMarkers = ['", "", undefined', '","",undefined'];
-  let end = -1;
-  for (const m of endMarkers) {
-    end = wrapper.indexOf(m, start);
-    if (end !== -1) break;
-  }
-  if (end === -1) throw new Error('Hujung payload init tidak ditemui');
-  const decoded = decodeJsString(wrapper.slice(start, end));
-  const outer = JSON.parse(decoded);
-  if (!outer.userHtml) throw new Error('userHtml tiada dalam payload');
-  const data = JSON.parse(extractDataJson(outer.userHtml));
-
-  const payload = { ok: true, period: data?.roster?.periodKey || period || null, data };
+  const data = parseRosterWrapper(wrapper);
+  const payload = rosterEnvelope(data, period);
 
   if (cache) {
     const cached = new Response(JSON.stringify(payload), {
@@ -179,12 +106,12 @@ async function loadRoster(period, base) {
  */
 export async function handleRoster(request, env = {}) {
   if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: JSON_HEADERS });
+    return new Response(null, { status: 204, headers: API_HEADERS });
   }
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     return new Response(
       JSON.stringify({ ok: false, error: 'Kaedah tidak dibenarkan. Guna GET.' }),
-      { status: 405, headers: { ...JSON_HEADERS, Allow: 'GET, HEAD, OPTIONS', 'Cache-Control': 'no-store' } },
+      { status: 405, headers: { ...API_HEADERS, Allow: 'GET, HEAD, OPTIONS', 'Cache-Control': 'no-store' } },
     );
   }
 
@@ -194,7 +121,7 @@ export async function handleRoster(request, env = {}) {
   if (period && !PERIOD_RE.test(period)) {
     return new Response(
       JSON.stringify({ ok: false, error: 'Parameter period tidak sah. Format: YYYY-MM.' }),
-      { status: 400, headers: { ...JSON_HEADERS, 'Cache-Control': 'no-store' } },
+      { status: 400, headers: { ...API_HEADERS, 'Cache-Control': 'no-store' } },
     );
   }
 
@@ -205,7 +132,7 @@ export async function handleRoster(request, env = {}) {
     return new Response(request.method === 'HEAD' ? null : body, {
       status: 200,
       headers: {
-        ...JSON_HEADERS,
+        ...API_HEADERS,
         'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600',
         'X-Roster-Cache': cacheStatus,
       },
@@ -214,7 +141,7 @@ export async function handleRoster(request, env = {}) {
     const msg = err && err.name === 'AbortError' ? 'Sumber roster tamat masa.' : String((err && err.message) || err);
     return new Response(
       JSON.stringify({ ok: false, error: `Gagal memuatkan roster: ${msg}` }),
-      { status: 502, headers: { ...JSON_HEADERS, 'Cache-Control': 'no-store' } },
+      { status: 502, headers: { ...API_HEADERS, 'Cache-Control': 'no-store' } },
     );
   }
 }

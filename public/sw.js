@@ -6,27 +6,34 @@
 //   - /data/*.json dan aset shell: stale-while-revalidate
 //   - fon Google: cache-first/stale-while-revalidate
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL_CACHE = `jadualot-shell-${VERSION}`;
 const DATA_CACHE = `jadualot-data-${VERSION}`;
 const API_CACHE = `jadualot-api-${VERSION}`;
 const FONT_CACHE = `jadualot-fonts-${VERSION}`;
 const OWNED_CACHES = [SHELL_CACHE, DATA_CACHE, API_CACHE, FONT_CACHE];
-const SHELL_URL = new URL('./index.html', self.location.href).href;
+
+// Semua laluan diterbitkan daripada lokasi skrip ini, bukan diandaikan root.
+const BASE = new URL('./', self.location.href);
+const BASE_PATH = BASE.pathname.replace(/\/$/, '');
+const SHELL_URL = new URL('index.html', BASE).href;
+const SW_PATH = new URL('sw.js', BASE).pathname;
+const API_PATH = new URL('api/roster', BASE).pathname;
+const DATA_PATH = new URL('data/', BASE).pathname;
 
 const SHELL_ASSETS = [
-  './',
-  './index.html',
-  './styles.css',
-  './app.js',
-  './manifest.webmanifest',
-  './favicon.svg',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/maskable-192.png',
-  './icons/maskable-512.png',
-  './icons/apple-touch-icon.png',
-];
+  '',
+  'index.html',
+  'styles.css',
+  'app.js',
+  'manifest.webmanifest',
+  'favicon.svg',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/maskable-192.png',
+  'icons/maskable-512.png',
+  'icons/apple-touch-icon.png',
+].map((asset) => new URL(asset, BASE).href);
 
 const OFFLINE_HTML = `<!doctype html>
 <html lang="ms">
@@ -41,8 +48,8 @@ const OFFLINE_HTML = `<!doctype html>
   main { max-width: 34rem; text-align: center; }
   h1 { font-size: 1.5rem; margin: 0 0 .6rem; }
   p { line-height: 1.6; color: #5b616e; }
-  button { margin-top: 1rem; padding: .65rem 1.1rem; border: 0; border-radius: .6rem;
-    background: #4f46e5; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  .btn { display: inline-block; margin-top: 1rem; padding: .65rem 1.1rem; border: 0; border-radius: .6rem;
+    background: #4f46e5; color: #fff; font: inherit; font-weight: 600; text-decoration: none; }
   @media (prefers-color-scheme: dark) {
     body { background: #0a0b0e; color: #f2f4f8; }
     p { color: #9aa2b1; }
@@ -53,7 +60,7 @@ const OFFLINE_HTML = `<!doctype html>
 <main>
   <h1>Luar talian</h1>
   <p>JadualOT belum tersedia pada peranti ini. Sambung ke internet dan buka semula aplikasi.</p>
-  <button type="button" onclick="location.reload()">Cuba lagi</button>
+  <a class="btn" href="${BASE.href}">Cuba lagi</a>
 </main>
 </body>
 </html>`;
@@ -95,7 +102,7 @@ self.addEventListener('activate', (event) => {
 async function precacheData() {
   const cache = await caches.open(DATA_CACHE);
   try {
-    const indexUrl = new URL('./data/index.json', self.location.href).href;
+    const indexUrl = new URL('data/index.json', BASE).href;
     const res = await fetch(indexUrl, { cache: 'reload' });
     if (!res.ok) return;
     await cache.put(indexUrl, res.clone());
@@ -103,7 +110,7 @@ async function precacheData() {
     const idx = await res.json();
     const periods = Array.isArray(idx.periods) ? idx.periods : [];
     await Promise.allSettled(periods.map(async (period) => {
-      const url = new URL(`./data/roster-${encodeURIComponent(period)}.json`, self.location.href).href;
+      const url = new URL(`data/roster-${encodeURIComponent(period)}.json`, BASE).href;
       const roster = await fetch(url, { cache: 'reload' });
       if (roster.ok) await cache.put(url, roster);
     }));
@@ -122,19 +129,20 @@ self.addEventListener('fetch', (event) => {
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
   const sameOrigin = url.origin === self.location.origin;
+  const inBase = !BASE_PATH || url.pathname === BASE_PATH || url.pathname.startsWith(`${BASE_PATH}/`);
 
   if (request.mode === 'navigate') {
-    if (sameOrigin) event.respondWith(handleNavigation(event));
+    if (sameOrigin && inBase) event.respondWith(handleNavigation(event));
     return;
   }
 
-  if (sameOrigin) {
-    if (url.pathname.endsWith('/api/roster')) {
+  if (sameOrigin && inBase) {
+    if (url.pathname === API_PATH) {
       event.respondWith(handleApi(event));
       return;
     }
-    if (url.pathname === '/sw.js') return;
-    if (url.pathname.startsWith('/data/')) {
+    if (url.pathname === SW_PATH) return;
+    if (url.pathname.startsWith(DATA_PATH)) {
       event.respondWith(staleWhileRevalidate(event, DATA_CACHE));
       return;
     }

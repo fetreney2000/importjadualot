@@ -94,5 +94,44 @@ for (const p of idx.periods) {
   console.log(`  ${p} ${dd.roster.status} · ${dd.assignments.length} slot · ${dd.staff.length} staf`);
 }
 
+// 8. Pengerasan: header keselamatan dan tiada pengendali inline
+const headers = fs.readFileSync('public/_headers', 'utf8');
+const requiredHeaders = [
+  'Content-Security-Policy',
+  'Strict-Transport-Security',
+  'Permissions-Policy',
+  'X-Frame-Options',
+  'X-Content-Type-Options',
+];
+const missingHeaders = requiredHeaders.filter((h) => !headers.includes(h));
+console.log(`header keselamatan: ${missingHeaders.length ? `hilang ${missingHeaders.join(', ')}` : 'lengkap'}`);
+if (missingHeaders.length) fail++;
+if (/script-src[^;]*'unsafe-inline'/.test(headers)) {
+  console.log('AMARAN: CSP membenarkan script inline');
+  fail++;
+}
+const inlineHandler = /\bon(?:click|dblclick|load|error|submit|change|input|keydown|keyup|focus|blur|mouseover|mouseout|touchstart|touchend)\s*=/i;
+if (inlineHandler.test(html) || inlineHandler.test(js)) {
+  console.log('AMARAN: pengendali inline (on*) ditemui');
+  fail++;
+}
+if (!js.includes('normaliseRoster')) {
+  console.log('AMARAN: normaliseRoster tiada — sampul data tidak diseragamkan');
+  fail++;
+}
+
+// 9. Logik huraian roster dikongsi, bukan disalin
+const sharedParse = fs.readFileSync('shared/roster-parse.js', 'utf8');
+for (const [file, marker] of [
+  ['worker/roster.js', "from '../shared/roster-parse.js'"],
+  ['tools/fetch-periods.mjs', "from '../shared/roster-parse.js'"],
+]) {
+  const source = fs.readFileSync(file, 'utf8');
+  if (!source.includes(marker) || !sharedParse.includes('export function decodeJsString')) {
+    console.log(`AMARAN: ${file} tidak menggunakan modul huraian kongsi`);
+    fail++;
+  }
+}
+
 console.log(fail ? `\nGAGAL: ${fail} isu` : '\nSemua semakan lulus.');
 process.exit(fail ? 1 : 0);

@@ -23,15 +23,39 @@ const STATUS_LABELS = {
 
 const AVATAR_HUES = [230, 190, 160, 0, 300, 35, 205, 265, 90, 330];
 
+/* ---------------- storage ---------------- */
+// localStorage boleh membaling dalam konteks storan disekat (mod privasi,
+// sandbox, kuota penuh). Jangan biarkan ia membunuh aplikasi sebelum boot:
+// simpan juga dalam memori supaya sesi semasa tetap berfungsi.
+const memoryStore = new Map();
+const storage = {
+  get(key) {
+    try {
+      const value = localStorage.getItem(key);
+      if (value !== null) return value;
+    } catch { /* guna memori */ }
+    return memoryStore.has(key) ? memoryStore.get(key) : null;
+  },
+  set(key, value) {
+    const text = String(value);
+    memoryStore.set(key, text);
+    try { localStorage.setItem(key, text); } catch { /* guna memori */ }
+  },
+  remove(key) {
+    memoryStore.delete(key);
+    try { localStorage.removeItem(key); } catch { /* guna memori */ }
+  },
+};
+
 const state = {
   data: null,
-  period: localStorage.getItem(LS_PERIOD) || null,
+  period: storage.get(LS_PERIOD) || null,
   tab: 'agenda',
   query: '',
   units: new Set(),
   changedOnly: false,
-  myKey: localStorage.getItem(LS_NAME) || '',
-  myName: localStorage.getItem(LS_NAME_LABEL) || '',
+  myKey: storage.get(LS_NAME) || '',
+  myName: storage.get(LS_NAME_LABEL) || '',
   offline: false,
   openStaff: new Set(),
 };
@@ -117,6 +141,19 @@ function toast(msg, ms = 6000) {
 
 function sortAssignments(list) {
   return [...list].sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
+}
+
+/**
+ * Satu bentuk data di seluruh aplikasi: { ok, period, data }.
+ * Fail sandaran yang dibundel kekal mentah; hanya di sini ia dibungkus.
+ */
+function normaliseRoster(body, period) {
+  const data = body && body.data && body.data.roster ? body.data : (body && body.roster ? body : null);
+  if (!data) {
+    if (body && body.ok === false) throw new Error(body.error || 'API tidak tersedia');
+    throw new Error('Bentuk data roster tidak dikenali.');
+  }
+  return { ok: true, period: data.roster.periodKey || period || null, data };
 }
 
 function filtered(extra = {}) {
@@ -310,7 +347,7 @@ function renderMe() {
   const name = me ? me.staffName : (state.myName || state.myKey);
   if (me && state.myName !== me.staffName) {
     state.myName = me.staffName;
-    localStorage.setItem(LS_NAME_LABEL, state.myName);
+    storage.set(LS_NAME_LABEL, state.myName);
   }
 
   el.mePicker.hidden = true;
@@ -364,9 +401,12 @@ function syncKpis() {
 
 /** Carian dikongsi; tapisan unit/perubahan hanya relevan pada Senarai. */
 function syncFilterBar() {
-  el.filterBar.hidden = state.tab === 'me';
-  el.unitChips.hidden = state.tab !== 'agenda';
-  el.changedOnly.hidden = state.tab !== 'agenda';
+  const onAgenda = state.tab === 'agenda';
+  el.unitChips.hidden = !onAgenda;
+  el.changedOnly.hidden = !onAgenda;
+  // Carian kekal pada Senarai/Staf; sembunyikan seluruh bar apabila tiada
+  // kawalan langsung supaya tiada baris tapisan kosong (contoh: Tugas Saya).
+  el.filterBar.hidden = !onAgenda && state.tab !== 'staff';
 }
 
 function renderPeriodSelect() {
@@ -389,9 +429,9 @@ async function loadPeriod(period) {
   state.offline = false;
   try {
     const res = await fetch(`${API}?period=${encodeURIComponent(period)}`);
-    const body = await res.json();
-    if (!res.ok || !body.ok) throw new Error((body && body.error) || `HTTP ${res.status}`);
-    state.data = body.data;
+    const raw = await res.json();
+    if (!res.ok) throw new Error((raw && raw.error) || `HTTP ${res.status}`);
+    state.data = normaliseRoster(raw, period).data;
     state.offline = res.headers.get('X-Jadualot-Cache') === 'offline';
     if (state.offline) {
       toast('Mod luar talian — memaparkan roster terakhir yang disimpan pada peranti ini. Tekan butang muat semula apabila dalam talian.');
@@ -399,13 +439,12 @@ async function loadPeriod(period) {
   } catch (err) {
     const res = await fetch(`data/roster-${encodeURIComponent(period)}.json`);
     if (!res.ok) throw new Error('Tiada data luar talian untuk tempoh ini.');
-    const body = await res.json();
-    state.data = body.ok ? body.data : body;
+    state.data = normaliseRoster(await res.json(), period).data;
     state.offline = true;
     toast('Mod luar talian — memaparkan data sandaran yang dibundel. Tekan butang muat semula apabila dalam talian.');
   }
   state.period = state.data.roster.periodKey;
-  localStorage.setItem(LS_PERIOD, state.period);
+  storage.set(LS_PERIOD, state.period);
   renderAll();
   centerTodayChip();
 }
@@ -417,7 +456,8 @@ function setTab(tab) {
   document.querySelectorAll('[data-tab]').forEach((btn) => {
     const on = btn.dataset.tab === tab;
     btn.classList.toggle('active', on);
-    btn.setAttribute('aria-selected', String(on));
+    if (on) btn.setAttribute('aria-current', 'page');
+    else btn.removeAttribute('aria-current');
   });
   $('view-agenda').hidden = tab !== 'agenda';
   $('view-staff').hidden = tab !== 'staff';
@@ -545,8 +585,8 @@ el.meSave.addEventListener('click', () => {
   const person = state.data.staff.find((p) => p.staffKey === key);
   state.myKey = key;
   state.myName = person ? person.staffName : (el.meSelect.selectedOptions[0]?.textContent || key);
-  localStorage.setItem(LS_NAME, state.myKey);
-  localStorage.setItem(LS_NAME_LABEL, state.myName);
+  storage.set(LS_NAME, state.myKey);
+  storage.set(LS_NAME_LABEL, state.myName);
   renderMe();
   toast('');
 });
@@ -554,8 +594,8 @@ el.meSave.addEventListener('click', () => {
 el.meChange.addEventListener('click', () => {
   state.myKey = '';
   state.myName = '';
-  localStorage.removeItem(LS_NAME);
-  localStorage.removeItem(LS_NAME_LABEL);
+  storage.remove(LS_NAME);
+  storage.remove(LS_NAME_LABEL);
   renderHeader();
   renderMe();
 });
@@ -586,12 +626,13 @@ window.addEventListener('resize', () => {
   try {
     if (!state.period) {
       const res = await fetch(API);
-      const body = await res.json();
-      if (!res.ok || !body.ok) throw new Error(body?.error || 'API tidak tersedia');
+      const raw = await res.json();
+      if (!res.ok) throw new Error(raw?.error || 'API tidak tersedia');
+      const body = normaliseRoster(raw);
       state.data = body.data;
-      state.period = state.data.roster.periodKey;
+      state.period = body.data.roster.periodKey;
       state.offline = res.headers.get('X-Jadualot-Cache') === 'offline';
-      localStorage.setItem(LS_PERIOD, state.period);
+      storage.set(LS_PERIOD, state.period);
       renderAll();
       centerTodayChip();
       if (state.offline) {
@@ -605,14 +646,15 @@ window.addEventListener('resize', () => {
       const idx = await (await fetch('data/index.json')).json();
       const latest = (idx.periods || []).sort().reverse()[0];
       if (!latest) throw new Error('tiada data sandaran');
-      const body = await (await fetch(`data/roster-${latest}.json`)).json();
-      state.data = body.ok ? body.data : body;
+      const raw = await (await fetch(`data/roster-${latest}.json`)).json();
+      state.data = normaliseRoster(raw, latest).data;
       state.period = state.data.roster.periodKey;
       state.offline = true;
       renderAll();
       toast('API tidak dapat dihubungi — memaparkan data sandaran. Semak sambungan internet.', 0);
     } catch (err2) {
-      el.agenda.innerHTML = `<div class="empty"><strong>Gagal memuatkan roster</strong>${esc(err.message)}<br><br><button class="btn primary" onclick="location.reload()" type="button">Cuba lagi</button></div>`;
+      el.agenda.innerHTML = `<div class="empty"><strong>Gagal memuatkan roster</strong>${esc(err.message)}<br><br><button class="btn primary" data-retry type="button">Cuba lagi</button></div>`;
+      el.agenda.querySelector('[data-retry]')?.addEventListener('click', () => location.reload());
       el.updated.textContent = 'Tidak tersedia';
     }
   }

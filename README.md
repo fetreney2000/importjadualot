@@ -35,12 +35,14 @@ public/
 worker/
   index.js              # router: /api/* → Worker, selebihnya aset statik
   roster.js             # proksi: GET /api/roster?period=YYYY-MM
+shared/
+  roster-parse.js       # huraian pembungkus Apps Script (Worker + alat)
 wrangler.jsonc          # konfigurasi Worker + aset public/
 tools/
   preview.cjs           # pelayan statik + mock API (port 4173)
   test-handler.cjs      # ujian pengendali Worker tanpa deploy
-  check-frontend.cjs    # semakan id/CSS/kelas/data/PWA
-  shots.cjs             # tangkapan skrin puppeteer-core (Windows + Edge)
+  check-frontend.cjs    # semakan id/CSS/kelas/data/PWA/header
+  shots.cjs             # tangkapan skrin puppeteer-core (Chromium/Edge)
   fetch-periods.mjs     # jana semula JSON sandaran
 ```
 
@@ -51,18 +53,25 @@ memerlukan JS (`goog.script.init` + `userHtml` terbenam), jadi ia tidak boleh
 dipanggil terus dari pelayar (CORS + payload sandbox). Worker:
 
 1. memuat turun pembalut,
-2. menyahkod literal rentetan JS (`\xNN`, `\uNNNN`, dsb.),
+2. menyahkod literal rentetan JS (`\xNN`, `\uNNNN`, `\b`, `\f`, `\v`, `\0`, `\/`
+   dan sambungan baris),
 3. mengekstrak objek `const DATA = {...}` yang seimbang,
 4. menyimpan JSON bersih dalam Cache API Cloudflare selama 5 minit,
 5. mengembalikan `{ ok, period, data }` dengan cache
    `max-age=60, s-maxage=300, stale-while-revalidate=600`.
 
-Aplikasi sentiasa mencuba `/api/roster` dahulu. Jika ia gagal atau peranti luar
-talian, JSON dalam `public/data/` digunakan dan pengguna dimaklumkan.
+Langkah 2 dan 3 dikongsi melalui `shared/roster-parse.js`, jadi
+`tools/fetch-periods.mjs` menghuraikan sumber langsung dengan logik yang sama.
 
-`public/_headers` hanya terpakai pada aset statik; header respons API ditetapkan
-terus dalam `worker/roster.js`. Fail `sw.js` dihidangkan dengan
-`Cache-Control: no-cache` supaya kemas kini service worker cepat dikesan.
+Aplikasi sentiasa mencuba `/api/roster` dahulu. Jika ia gagal atau peranti luar
+talian, JSON dalam `public/data/` digunakan dan pengguna dimaklumkan. Fail
+sandaran kekal mentah (`{ roster, staff, ... }`); aplikasi membungkusnya kepada
+sampul `{ ok, period, data }` di satu tempat sebelum digunakan.
+
+`public/_headers` menetapkan CSP, HSTS, Permissions-Policy, X-Frame-Options dan
+X-Content-Type-Options untuk aset statik. Respons `/api/*` menggunakan set
+keselamatan yang sama daripada `worker/roster.js`. Fail `sw.js` dihidangkan
+dengan `Cache-Control: no-cache` supaya kemas kini service worker cepat dikesan.
 
 ## PWA dan mod luar talian
 

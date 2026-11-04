@@ -41,15 +41,15 @@
       </a>
 
       <nav class="rail-nav" aria-label="Paparan">
-        <button class="nav-item active" data-tab="agenda" type="button" aria-selected="true">
+        <button class="nav-item active" data-tab="agenda" type="button" aria-current="page" aria-controls="view-agenda">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
           Senarai
         </button>
-        <button class="nav-item" data-tab="staff" type="button" aria-selected="false">
+        <button class="nav-item" data-tab="staff" type="button" aria-controls="view-staff">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.3 2.9-5.2 6.5-5.2s6.5 1.9 6.5 5.2"/><path d="M16 5.5a3.2 3.2 0 0 1 0 6M18 14.9c2.2.6 3.5 2.1 3.5 4.1"/></svg>
           Staf
         </button>
-        <button class="nav-item" data-tab="me" type="button" aria-selected="false">
+        <button class="nav-item" data-tab="me" type="button" aria-controls="view-me">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.2l5.4-.8z"/></svg>
           Tugas Saya
         </button>
@@ -104,6 +104,12 @@
       </header>
 
       <main class="content" id="main">
+        <noscript>
+          <div class="noscript" role="alert">
+            <strong>JavaScript diperlukan.</strong> JadualOT menggunakan JavaScript untuk memaparkan roster. Aktifkan JavaScript dan muat semula halaman.
+          </div>
+        </noscript>
+
         <section class="page-head">
           <div class="eyebrow-row">
             <span class="pill status" id="statusPill">Memuatkan</span>
@@ -189,16 +195,16 @@
     </div>
 
     <!-- Bottom tabs (mobile) -->
-    <nav class="tabbar" aria-label="Navigasi utama">
-      <button class="tab active" data-tab="agenda" type="button" aria-selected="true">
+    <nav class="tabbar" aria-label="Navigasi utama mudah alih">
+      <button class="tab active" data-tab="agenda" type="button" aria-current="page" aria-controls="view-agenda">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
         Senarai
       </button>
-      <button class="tab" data-tab="staff" type="button" aria-selected="false">
+      <button class="tab" data-tab="staff" type="button" aria-controls="view-staff">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.3 2.9-5.2 6.5-5.2s6.5 1.9 6.5 5.2"/><path d="M16 5.5a3.2 3.2 0 0 1 0 6"/></svg>
         Staf
       </button>
-      <button class="tab" data-tab="me" type="button" aria-selected="false">
+      <button class="tab" data-tab="me" type="button" aria-controls="view-me">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.2l5.4-.8z"/></svg>
         Tugas Saya
       </button>
