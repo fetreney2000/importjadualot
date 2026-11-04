@@ -1,0 +1,2203 @@
+{
+ "version": "1.6.0",
+ "viewUrl": "https://script.google.com/macros/s/AKfycbzVl943vS3gzgALWFxT3r645KDXwnjPnoVPhTWqo1X3lWXwWEmX0F7riJd5vc4__xkj/exec",
+ "roster": {
+  "periodKey": "2026-09",
+  "effectiveVersion": 63,
+  "status": "CLAIM_CLOSED",
+  "assignmentCount": 188,
+  "changedCount": 74,
+  "lastUpdated": "2026-10-01 09:43"
+ },
+ "rosterOptions": [
+  {
+   "periodKey": "2026-11",
+   "status": "ACTIVE",
+   "label": "2026-11 · ACTIVE"
+  },
+  {
+   "periodKey": "2026-10",
+   "status": "CLAIM_CLOSED",
+   "label": "2026-10 · CLAIM_CLOSED"
+  },
+  {
+   "periodKey": "2026-09",
+   "status": "CLAIM_CLOSED",
+   "label": "2026-09 · CLAIM_CLOSED"
+  },
+  {
+   "periodKey": "2026-08",
+   "status": "CLAIM_CLOSED",
+   "label": "2026-08 · CLAIM_CLOSED"
+  },
+  {
+   "periodKey": "2026-07",
+   "status": "CLAIM_CLOSED",
+   "label": "2026-07 · CLAIM_CLOSED"
+  }
+ ],
+ "assignments": [
+  {
+   "date": "2026-09-01",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-01",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-01",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-01",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "USILI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-01",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-02",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-02",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-02",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-02",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "QURRATU",
+   "changed": false
+  },
+  {
+   "date": "2026-09-02",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S010",
+   "staffName": "JOSIE",
+   "originalStaffName": "JOSIE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-03",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "FETRE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-03",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "NGACHIRAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-03",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-03",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "HERMAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-03",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S011",
+   "staffName": "PEGAWAI-F",
+   "originalStaffName": "PEGAWAI-F",
+   "changed": false
+  },
+  {
+   "date": "2026-09-04",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-04",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-04",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "SELYVESTER",
+   "changed": true
+  },
+  {
+   "date": "2026-09-04",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-04",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "ANIEDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "USILI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "JUBAIDAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-05",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S017",
+   "staffName": "DIANA",
+   "originalStaffName": "DIANA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S018",
+   "staffName": "USILI",
+   "originalStaffName": "USILI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-06",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-07",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "ANIEDA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-07",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "RIKY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-07",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "RAIDAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-07",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S010",
+   "staffName": "JOSIE",
+   "originalStaffName": "JOSIE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-07",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-08",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-08",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-08",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "SELYVESTER",
+   "changed": false
+  },
+  {
+   "date": "2026-09-08",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-08",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "HERMAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-09",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-09",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-09",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-09",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S017",
+   "staffName": "DIANA",
+   "originalStaffName": "DIANA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-09",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S022",
+   "staffName": "RUSDI",
+   "originalStaffName": "RUSDI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-10",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-10",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-10",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "SELYVESTER",
+   "changed": false
+  },
+  {
+   "date": "2026-09-10",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-10",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S011",
+   "staffName": "PEGAWAI-F",
+   "originalStaffName": "PEGAWAI-F",
+   "changed": false
+  },
+  {
+   "date": "2026-09-11",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "FETRE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-11",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-11",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "ISAWATI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-11",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S018",
+   "staffName": "USILI",
+   "originalStaffName": "USILI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-11",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "SELYVESTER",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "NGACHIRAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S017",
+   "staffName": "DIANA",
+   "originalStaffName": "DIANA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-12",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S010",
+   "staffName": "JOSIE",
+   "originalStaffName": "JOSIE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "SELYVESTER",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "QURRATU",
+   "changed": true
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "HERMAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "FETRE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "RIKY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "ANIEDA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-13",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-14",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-14",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "NGACHIRAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-14",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-14",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "ANIEDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-14",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-15",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "ANIEDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-15",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-15",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-15",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-15",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "AUDERY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "HERMAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "NGACHIRAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "FETRE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "QURRATU",
+   "changed": false
+  },
+  {
+   "date": "2026-09-16",
+   "dayType": "PUBLIC_HOLIDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S018",
+   "staffName": "USILI",
+   "originalStaffName": "USILI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-17",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "BELTON",
+   "changed": true
+  },
+  {
+   "date": "2026-09-17",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-17",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "CECELIA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-17",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "AUDERY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-17",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S011",
+   "staffName": "PEGAWAI-F",
+   "originalStaffName": "PEGAWAI-F",
+   "changed": false
+  },
+  {
+   "date": "2026-09-18",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-18",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-18",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-18",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-18",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "ANIEDA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "SELYVESTER",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "JULINAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S017",
+   "staffName": "DIANA",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "QURRATU",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "HERMAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "RAIDAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-19",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "AINUN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "NGACHIRAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "CECELIA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "FETRE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "BELTON",
+   "changed": true
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "HERMAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-20",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-21",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S007",
+   "staffName": "ISAWATI",
+   "originalStaffName": "ISAWATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-21",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "RAIDAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-21",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-21",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-21",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-22",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-22",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "QURRATU",
+   "changed": false
+  },
+  {
+   "date": "2026-09-22",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RIKY",
+   "changed": false
+  },
+  {
+   "date": "2026-09-22",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "ANIEDA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-22",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-23",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH",
+   "originalStaffName": "JUBAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-23",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "SELYVESTER",
+   "changed": true
+  },
+  {
+   "date": "2026-09-23",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-23",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "DIANA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-23",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S023",
+   "staffName": "AUDERY",
+   "originalStaffName": "FETRE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-24",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S002",
+   "staffName": "JULINAH",
+   "originalStaffName": "JULINAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-24",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "NGACHIRAN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-24",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-24",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "USILI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-24",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S011",
+   "staffName": "PEGAWAI-F",
+   "originalStaffName": "PEGAWAI-F",
+   "changed": false
+  },
+  {
+   "date": "2026-09-25",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "HERMAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-25",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S008",
+   "staffName": "RAIDAH",
+   "originalStaffName": "RAIDAH",
+   "changed": false
+  },
+  {
+   "date": "2026-09-25",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "BELTON",
+   "changed": true
+  },
+  {
+   "date": "2026-09-25",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "ANIEDA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-25",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "JULINAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S010",
+   "staffName": "JOSIE",
+   "originalStaffName": "USILI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH",
+   "originalStaffName": "QURRATU",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "FETRE",
+   "changed": false
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "WEDAYATI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "RIKY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "DIANA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-26",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "RUSDI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "NGACHIRAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "ISAWATI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "ANIEDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "08:00",
+   "endTime": "15:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "AUDERY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "PREPACK",
+   "startTime": "08:00",
+   "endTime": "14:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "CECELIA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN",
+   "originalStaffName": "AINUN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "AMBU",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "RAIDAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "INPA",
+   "startTime": "15:00",
+   "endTime": "22:00",
+   "staffKey": "S018",
+   "staffName": "USILI",
+   "originalStaffName": "JOSIE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-27",
+   "dayType": "WEEKEND",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "BELTON",
+   "changed": false
+  },
+  {
+   "date": "2026-09-28",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S013",
+   "staffName": "FETRE",
+   "originalStaffName": "RIKY",
+   "changed": true
+  },
+  {
+   "date": "2026-09-28",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S021",
+   "staffName": "HERMAN",
+   "originalStaffName": "USILI",
+   "changed": true
+  },
+  {
+   "date": "2026-09-28",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-28",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "QURRATU",
+   "changed": false
+  },
+  {
+   "date": "2026-09-28",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "ANIEDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-29",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S001",
+   "staffName": "BELTON",
+   "originalStaffName": "NORSOLEHAH",
+   "changed": true
+  },
+  {
+   "date": "2026-09-29",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S016",
+   "staffName": "CECELIA",
+   "originalStaffName": "NGACHIRAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-29",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S003",
+   "staffName": "RIKY",
+   "originalStaffName": "FETRE",
+   "changed": true
+  },
+  {
+   "date": "2026-09-29",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S017",
+   "staffName": "DIANA",
+   "originalStaffName": "HERMAN",
+   "changed": true
+  },
+  {
+   "date": "2026-09-29",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S006",
+   "staffName": "HILDA",
+   "originalStaffName": "HILDA",
+   "changed": false
+  },
+  {
+   "date": "2026-09-30",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S012",
+   "staffName": "AINUN",
+   "originalStaffName": "AINUN",
+   "changed": false
+  },
+  {
+   "date": "2026-09-30",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S020",
+   "staffName": "SELYVESTER",
+   "originalStaffName": "SELYVESTER",
+   "changed": false
+  },
+  {
+   "date": "2026-09-30",
+   "dayType": "WORKDAY",
+   "unitCode": "AMBU",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S005",
+   "staffName": "WEDAYATI",
+   "originalStaffName": "WEDAYATI",
+   "changed": false
+  },
+  {
+   "date": "2026-09-30",
+   "dayType": "WORKDAY",
+   "unitCode": "INPA",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "staffKey": "S004",
+   "staffName": "ANIEDA",
+   "originalStaffName": "CECELIA",
+   "changed": true
+  },
+  {
+   "date": "2026-09-30",
+   "dayType": "WORKDAY",
+   "unitCode": "AE",
+   "startTime": "22:00",
+   "endTime": "08:00",
+   "staffKey": "S009",
+   "staffName": "QURRATU",
+   "originalStaffName": "QURRATU",
+   "changed": false
+  }
+ ],
+ "staff": [
+  {
+   "staffKey": "S012",
+   "staffName": "AINUN"
+  },
+  {
+   "staffKey": "S004",
+   "staffName": "ANIEDA"
+  },
+  {
+   "staffKey": "S023",
+   "staffName": "AUDERY"
+  },
+  {
+   "staffKey": "S001",
+   "staffName": "BELTON"
+  },
+  {
+   "staffKey": "S016",
+   "staffName": "CECELIA"
+  },
+  {
+   "staffKey": "S017",
+   "staffName": "DIANA"
+  },
+  {
+   "staffKey": "S013",
+   "staffName": "FETRE"
+  },
+  {
+   "staffKey": "S021",
+   "staffName": "HERMAN"
+  },
+  {
+   "staffKey": "S006",
+   "staffName": "HILDA"
+  },
+  {
+   "staffKey": "S007",
+   "staffName": "ISAWATI"
+  },
+  {
+   "staffKey": "S010",
+   "staffName": "JOSIE"
+  },
+  {
+   "staffKey": "S014",
+   "staffName": "JUBAIDAH"
+  },
+  {
+   "staffKey": "S002",
+   "staffName": "JULINAH"
+  },
+  {
+   "staffKey": "S019",
+   "staffName": "NGACHIRAN"
+  },
+  {
+   "staffKey": "S015",
+   "staffName": "NORSOLEHAH"
+  },
+  {
+   "staffKey": "S011",
+   "staffName": "PEGAWAI-F"
+  },
+  {
+   "staffKey": "S009",
+   "staffName": "QURRATU"
+  },
+  {
+   "staffKey": "S008",
+   "staffName": "RAIDAH"
+  },
+  {
+   "staffKey": "S003",
+   "staffName": "RIKY"
+  },
+  {
+   "staffKey": "S022",
+   "staffName": "RUSDI"
+  },
+  {
+   "staffKey": "S020",
+   "staffName": "SELYVESTER"
+  },
+  {
+   "staffKey": "S018",
+   "staffName": "USILI"
+  },
+  {
+   "staffKey": "S005",
+   "staffName": "WEDAYATI"
+  }
+ ]
+}

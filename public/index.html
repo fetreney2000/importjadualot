@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17324d">
+  <meta name="description" content="Jadual kerja lebih masa SPPS-KLM — paparan mesra telefon: senarai, staf dan tugas saya.">
+  <title>Jadual OT — SPPS-KLM</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-text">
+        <p class="eyebrow">SPPS-KLM · Kerja Lebih Masa</p>
+        <h1 id="pageTitle">Roster Semasa</h1>
+        <p class="period" id="periodLine">Memuatkan…</p>
+      </div>
+      <div class="updated" id="updatedLine" title="Kemas kini terakhir">…</div>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+    <p class="notice" id="notice" hidden></p>
+
+    <!-- SENARAI -->
+    <section id="view-agenda" aria-label="Senarai syif">
+      <div class="toolbar">
+        <label class="search">
+          <span class="visually-hidden">Cari nama staf</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          <input id="searchInput" type="search" placeholder="Cari nama staf…" autocomplete="off">
+        </label>
+        <div class="chips" id="unitChips" role="group" aria-label="Tapis unit"></div>
+        <div class="toolbar-row">
+          <label class="period-picker">Tempoh
+            <select id="periodSelect" aria-label="Pilih tempoh"></select>
+          </label>
+          <button class="btn ghost" id="todayBtn" type="button">Hari ini</button>
+          <button class="btn ghost" id="refreshBtn" type="button">Muat semula</button>
+          <label class="switch"><input type="checkbox" id="changedOnly"> Berubah sahaja</label>
+        </div>
+      </div>
+      <div id="agendaList"></div>
+    </section>
+
+    <!-- STAF -->
+    <section id="view-staff" aria-label="Mengikut staf" hidden>
+      <p class="hint">Gunakan carian di Senarai untuk menapis, atau pilih kad staf untuk melihat semua slot mereka.</p>
+      <div class="staff-grid" id="staffGrid"></div>
+    </section>
+
+    <!-- TUGAS SAYA -->
+    <section id="view-me" aria-label="Tugas saya" hidden>
+      <div class="me-picker card" id="mePicker">
+        <h2>Tugas saya</h2>
+        <p>Pilih nama sekali — aplikasi akan mengingati dan memaparkan hanya slot anda.</p>
+        <div class="me-picker-row">
+          <select id="meSelect" aria-label="Pilih nama anda"></select>
+          <button class="btn primary" id="meSave" type="button">Simpan</button>
+        </div>
+      </div>
+      <div id="meContent" hidden>
+        <div class="me-summary" id="meSummary"></div>
+        <button class="btn ghost" id="meChange" type="button">Tukar nama</button>
+        <div id="meList"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottombar" aria-label="Navigasi utama">
+    <button class="tab active" data-tab="agenda" type="button" aria-selected="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-7 15-5-5 1.4-1.4L12 16.2l7.6-7.6L21 10l-9 9z"/></svg>
+      Senarai
+    </button>
+    <button class="tab" data-tab="staff" type="button" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.6 0-1 .1a4.2 4.2 0 0 1 1.5 2.6V19h6v-2.5c0-2.3-4.7-3.5-6.5-3.5z"/></svg>
+      Staf
+    </button>
+    <button class="tab" data-tab="me" type="button" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.3 0-8 1.7-8 5v3h16v-3c0-3.3-4.7-5-8-5z"/></svg>
+      Tugas Saya
+    </button>
+  </nav>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
