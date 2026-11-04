@@ -12,7 +12,7 @@ const types = {
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
-  if (url.pathname === '/.netlify/functions/roster') {
+  if (url.pathname === '/api/roster') {
     const period = url.searchParams.get('period') || '2026-11';
     const file = path.join(root, 'data', `roster-${period}.json`);
     if (!fs.existsSync(file)) { res.writeHead(404); return res.end('{}'); }

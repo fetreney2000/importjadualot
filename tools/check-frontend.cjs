@@ -33,7 +33,13 @@ for (const m of html.matchAll(/class="([^"]+)"/g)) m[1].split(/\s+/).filter(Bool
 const noCss = [...htmlClasses].filter((c) => !css.includes(`.${c}`) && !c.startsWith('u-'));
 console.log(`kelas HTML: ${htmlClasses.size} | tanpa CSS: ${noCss.length ? noCss.join(', ') : 'tiada'}`);
 
-// 5. Data sandaran sah
+// 5. Laluan API mesti menuju ke Worker Cloudflare
+if (!js.includes("const API = '/api/roster'")) {
+  console.log("AMARAN: const API bukan '/api/roster'");
+  fail++;
+}
+
+// 6. Data sandaran sah
 const idx = JSON.parse(fs.readFileSync('public/data/index.json', 'utf8'));
 for (const p of idx.periods) {
   const d = JSON.parse(fs.readFileSync(`public/data/roster-${p}.json`, 'utf8'));

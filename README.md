@@ -21,17 +21,19 @@ public/
   index.html            # Senarai / Staf / Tugas Saya, rail + tab bar
   styles.css            # sistem reka bentuk, tema terang/gelap
   app.js                # vanilla JS, tiada framework
+  _headers              # header cache/keselamatan untuk aset statik
   favicon.svg
   manifest.webmanifest
   data/
     index.json          # senarai tempoh sandaran
     roster-YYYY-MM.json # data sandaran luar talian
-netlify/
-  functions/
-    roster.js           # proksi: GET ?period=YYYY-MM
-netlify.toml            # publish public/, functions netlify/functions
+worker/
+  index.js              # router: /api/* → Worker, selebihnya aset statik
+  roster.js             # proksi: GET /api/roster?period=YYYY-MM
+wrangler.jsonc          # konfigurasi Worker + aset public/
 tools/
-  preview.cjs           # pelayan tempatan + mock fungsi (port 4173)
+  preview.cjs           # pelayan statik + mock API (port 4173)
+  test-handler.cjs      # ujian pengendali Worker tanpa deploy
   check-frontend.cjs    # semakan id/CSS/kelas/data
   shots.cjs             # tangkapan skrin puppeteer-core (Windows + Edge)
   fetch-periods.mjs     # jana semula JSON sandaran
@@ -41,59 +43,75 @@ tools/
 
 Endpoint Apps Script (`exec?view=roster`) mengembalikan pembalut HTML yang
 memerlukan JS (`goog.script.init` + `userHtml` terbenam), jadi ia tidak boleh
-dipanggil terus dari pelayar (CORS + payload sandbox). Fungsi Netlify:
+dipanggil terus dari pelayar (CORS + payload sandbox). Worker:
 
 1. memuat turun pembalut,
 2. menyahkod literal rentetan JS (`\xNN`, `\uNNNN`, dsb.),
 3. mengekstrak objek `const DATA = {...}` yang seimbang,
-4. mengembalikan `{ ok, period, data }` sebagai JSON dengan cache
-   `max-age=60, s-maxage=300`.
+4. menyimpan JSON bersih dalam Cache API Cloudflare selama 5 minit,
+5. mengembalikan `{ ok, period, data }` dengan cache
+   `max-age=60, s-maxage=300, stale-while-revalidate=600`.
 
-Aplikasi sentiasa mencuba fungsi dahulu. Jika ia gagal atau peranti luar
+Aplikasi sentiasa mencuba `/api/roster` dahulu. Jika ia gagal atau peranti luar
 talian, JSON dalam `public/data/` digunakan dan pengguna dimaklumkan.
+
+`public/_headers` hanya terpakai pada aset statik; header respons API ditetapkan
+terus dalam `worker/roster.js`.
 
 ## Pembangunan lokal
 
 ```sh
-npm install          # hanya puppeteer-core (alat tangkapan skrin)
-npm run preview      # http://localhost:4173
+npm install          # puppeteer-core + wrangler
+npm run dev          # http://localhost:8787 — Worker + aset sebenar
+npm run preview      # http://localhost:4173 — statik + mock API
 npm run check        # semakan integriti id, token CSS, kelas, data
+npm test             # uji pengendali Worker (tanpa Cache API)
 npm run shots        # tangkapan skrin ke shots/ (perlu Edge di Windows)
 npm run data:refresh # jana semula public/data/ daripada sumber langsung
 ```
 
-`npm run preview` menyediakan `public/` dan memetakan
-`/.netlify/functions/roster` kepada fail JSON sandaran, jadi keseluruhan
-aplikasi boleh diuji tanpa deploy.
+`npm run dev` menggunakan Wrangler dan menyediakan kedua-dua aset statik serta
+`/api/roster` sebenar, termasuk Cache API tempatan. `npm run preview` lebih
+ringan: ia memetakan `/api/roster` kepada fail JSON sandaran, jadi UI boleh
+diuji tanpa rangkaian.
 
-Untuk menguji fungsi sebenar secara terus:
+Env pilihan untuk pembangunan lokal — cipta `.dev.vars`:
 
-```sh
-node -e "require('./netlify/functions/roster.js').handler({queryStringParameters:{period:'2026-11'}}).then(r=>console.log(r.statusCode, JSON.parse(r.body).data.assignments.length))"
+```
+ROSTER_BASE_URL=https://script.google.com/macros/s/.../exec
 ```
 
-## Deploy ke Netlify
+## Deploy ke Cloudflare Workers
 
-**Pilihan A — Git (disyorkan):**
+**Pilihan A — Workers Builds (Git, disyorkan):**
 
-1. Push repositori ini ke GitHub/GitLab.
-2. Netlify → **Add new site** → **Import an existing project**.
-3. Tetapan build: biarkan **build command** kosong, **publish directory** =
-   `public`. `netlify.toml` sudah menetapkan direktori fungsi.
-4. Deploy. Fungsi tersedia di `/.netlify/functions/roster`.
+1. Push repositori ini ke GitHub.
+2. Cloudflare Dashboard → **Workers & Pages** → **Create** →
+   **Import a repository** (Workers Builds).
+3. Pilih repo dan branch `main`, root directory `/`.
+4. Tetapan build:
+   - **Build command:** `npm run check`
+   - **Deploy command:** `npm run deploy`
+   - **Preview command:** biarkan lalai (`npx wrangler versions upload`)
+5. Simpan dan deploy. Nama Worker dalam dashboard mesti `jadualot`, sama
+   dengan `name` dalam `wrangler.jsonc`.
 
-**Pilihan B — Netlify CLI:**
+Setiap branch selain `main` menghasilkan URL pratonton Workers Builds dan komen
+PR. Uji `https://<preview-url>/api/roster?period=2026-11` sebelum merge.
+
+**Pilihan B — Wrangler CLI:**
 
 ```sh
-npm i -g netlify-cli
-netlify deploy --prod
+npx wrangler login
+npm run deploy
 ```
-
-**Pilihan C — Netlify Drop:** sesuai untuk tapak statik sahaja. Fungsi proksi
-memerlukan deploy melalui Git atau CLI.
 
 **Env pilihan:** `ROSTER_BASE_URL` — gantikan URL Apps Script jika deployment
-ID berubah.
+ID berubah. Tetapkan di dashboard Worker → **Settings** → **Variables and
+Secrets** (atau dalam `.dev.vars` untuk lokal).
+
+**Domain tersuai:** memerlukan zon DNS dikendalikan oleh Cloudflare. Jika belum,
+gunakan URL `https://jadualot.<subdomain>.workers.dev` sehingga DNS dipindahkan.
 
 ## Nota
 
@@ -103,3 +121,5 @@ ID berubah.
   tiada kebergantungan pada fail luar.
 - Tangkapan skrin dalam `shots/` tidak disimpan dalam Git (lihat
   `.gitignore`).
+- Migrasi daripada Netlify: `netlify/` dan `netlify.toml` telah dibuang;
+  endpoint lama `/.netlify/functions/roster` digantikan dengan `/api/roster`.

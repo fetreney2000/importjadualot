@@ -3,7 +3,7 @@
    JadualOT — aplikasi roster (vanilla JS, tiada kebergantungan)
    ============================================================ */
 
-const API = '/.netlify/functions/roster';
+const API = '/api/roster';
 const LS_PERIOD = 'jadualot:period';
 const LS_NAME = 'jadualot:myName';
 

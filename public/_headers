@@ -1,0 +1,8 @@
+# Header untuk aset statik (tidak terpakai pada respons Worker /api/*).
+/data/*.json
+  Cache-Control: public, max-age=3600
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
