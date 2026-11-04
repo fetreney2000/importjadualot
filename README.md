@@ -169,5 +169,3 @@ gunakan URL `https://jadualot.<subdomain>.workers.dev` sehingga DNS dipindahkan.
   tiada kebergantungan pada fail luar.
 - Tangkapan skrin dalam `shots/` tidak disimpan dalam Git (lihat
   `.gitignore`).
-- Migrasi daripada Netlify: `netlify/` dan `netlify.toml` telah dibuang;
-  endpoint lama `/.netlify/functions/roster` digantikan dengan `/api/roster`.
