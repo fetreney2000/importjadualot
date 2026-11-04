@@ -6,6 +6,7 @@
 const API = '/api/roster';
 const LS_PERIOD = 'jadualot:period';
 const LS_NAME = 'jadualot:myName';
+const LS_NAME_LABEL = 'jadualot:myNameLabel';
 
 const DAYS = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
 const DAYS_SHORT = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
@@ -30,6 +31,7 @@ const state = {
   units: new Set(),
   changedOnly: false,
   myKey: localStorage.getItem(LS_NAME) || '',
+  myName: localStorage.getItem(LS_NAME_LABEL) || '',
   offline: false,
   openStaff: new Set(),
 };
@@ -136,7 +138,7 @@ function filtered(extra = {}) {
 function renderHeader() {
   const r = state.data.roster;
   const today = todayStr();
-  const mine = state.myKey && state.data.staff.some((p) => p.staffKey === state.myKey);
+  const mine = !!state.myKey;
   el.pageTitle.textContent = state.tab === 'me' && mine
     ? 'Tugas Saya'
     : r.status === 'ACTIVE' ? 'Roster Kerja Lebih Masa'
@@ -291,27 +293,32 @@ function renderStaff() {
 }
 
 function renderMe() {
-  if (!el.meSelect.options.length) {
-    el.meSelect.innerHTML = '<option value="">— Pilih nama anda —</option>' +
-      [...state.data.staff].sort((a, b) => a.staffName.localeCompare(b.staffName))
-        .map((p) => `<option value="${esc(p.staffKey)}">${esc(p.staffName)}</option>`).join('');
-  }
+  // Pilihan nama sentiasa disegerakkan dengan tempoh semasa.
+  el.meSelect.innerHTML = '<option value="">— Pilih nama anda —</option>' +
+    [...state.data.staff].sort((a, b) => a.staffName.localeCompare(b.staffName))
+      .map((p) => `<option value="${esc(p.staffKey)}">${esc(p.staffName)}</option>`).join('');
 
-  const me = state.data.staff.find((p) => p.staffKey === state.myKey);
-  if (!state.myKey || !me) {
-    if (state.myKey) { state.myKey = ''; localStorage.removeItem(LS_NAME); }
+  if (!state.myKey) {
     el.mePicker.hidden = false;
     el.meContent.hidden = true;
     el.meSelect.value = '';
     return;
   }
 
+  // Identiti yang disimpan kekal walaupun nama tiada dalam tempoh ini.
+  const me = state.data.staff.find((p) => p.staffKey === state.myKey) || null;
+  const name = me ? me.staffName : (state.myName || state.myKey);
+  if (me && state.myName !== me.staffName) {
+    state.myName = me.staffName;
+    localStorage.setItem(LS_NAME_LABEL, state.myName);
+  }
+
   el.mePicker.hidden = true;
   el.meContent.hidden = false;
   el.meSelect.value = state.myKey;
-  el.meAvatar.textContent = initials(me.staffName);
-  el.meAvatar.setAttribute('style', avatarStyle(me.staffName));
-  el.meName.textContent = me.staffName;
+  el.meAvatar.textContent = initials(name);
+  el.meAvatar.setAttribute('style', avatarStyle(name));
+  el.meName.textContent = name;
 
   const mine = sortAssignments(state.data.assignments.filter((a) => a.staffKey === state.myKey));
   const byUnit = {};
@@ -328,7 +335,11 @@ function renderMe() {
     { label: 'Cuti umum', value: mine.filter((a) => a.dayType === 'PUBLIC_HOLIDAY').length, cls: 'holiday' },
   ].map((t) => `<div class="kpi ${t.cls || ''}"><span class="kpi-label">${t.label}</span><strong class="kpi-value">${t.value}</strong></div>`).join('');
 
-  renderAgenda(el.meList, mine);
+  if (mine.length) {
+    renderAgenda(el.meList, mine);
+  } else {
+    el.meList.innerHTML = `<div class="empty"><strong>Tiada syif dalam tempoh ini</strong>Nama anda masih disimpan. Pilih tempoh lain untuk melihat tugasan anda.</div>`;
+  }
   renderHeader();
 }
 
@@ -529,16 +540,22 @@ el.staffGrid.addEventListener('click', (e) => {
 });
 
 el.meSave.addEventListener('click', () => {
-  if (!el.meSelect.value) { toast('Sila pilih nama anda dahulu.'); return; }
-  state.myKey = el.meSelect.value;
+  const key = el.meSelect.value;
+  if (!key) { toast('Sila pilih nama anda dahulu.'); return; }
+  const person = state.data.staff.find((p) => p.staffKey === key);
+  state.myKey = key;
+  state.myName = person ? person.staffName : (el.meSelect.selectedOptions[0]?.textContent || key);
   localStorage.setItem(LS_NAME, state.myKey);
+  localStorage.setItem(LS_NAME_LABEL, state.myName);
   renderMe();
   toast('');
 });
 
 el.meChange.addEventListener('click', () => {
   state.myKey = '';
+  state.myName = '';
   localStorage.removeItem(LS_NAME);
+  localStorage.removeItem(LS_NAME_LABEL);
   renderHeader();
   renderMe();
 });
