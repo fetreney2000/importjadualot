@@ -1,12 +1,15 @@
 {
   "name": "jadualot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
-  "description": "JadualOT — paparan roster kerja lebih masa SPPS-KLM. Tapak statik mobile-first dalam public/ dengan satu Netlify Function sebagai proksi data.",
+  "type": "module",
+  "description": "JadualOT — paparan roster kerja lebih masa SPPS-KLM. Tapak statik mobile-first dalam public/ dengan Cloudflare Worker sebagai proksi data.",
   "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
     "preview": "node tools/preview.cjs",
     "check": "node tools/check-frontend.cjs",
-    "test": "node tools/check-frontend.cjs",
+    "test": "node tools/test-handler.cjs",
     "shots": "node tools/shots.cjs",
     "data:refresh": "node tools/fetch-periods.mjs"
   },
@@ -17,7 +20,8 @@
   "keywords": [
     "roster",
     "jadual",
-    "netlify",
+    "cloudflare-workers",
+    "pwa",
     "spps-klm"
   ],
   "author": "",
@@ -30,6 +34,7 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "puppeteer-core": "^23.11.1"
+    "puppeteer-core": "^23.11.1",
+    "wrangler": "^4.157.0"
   }
 }

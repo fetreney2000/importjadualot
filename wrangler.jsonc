@@ -1,0 +1,21 @@
+// Konfigurasi Cloudflare Workers untuk JadualOT.
+// Worker mengendalikan /api/roster; semua fail dalam public/ dihidangkan
+// sebagai aset statik.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jadualot",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-04",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  // Diperlukan oleh `wrangler preview` (Worker Previews) yang digunakan oleh
+  // Workers Builds untuk deployment bukan production. Blok kosong dibenarkan;
+  // assets dan compatibility_date kekal di peringkat atas.
+  "previews": {},
+  "observability": {
+    "enabled": true
+  }
+}

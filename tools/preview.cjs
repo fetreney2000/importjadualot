@@ -8,11 +8,12 @@ const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
+  '.png': 'image/png',
 };
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
-  if (url.pathname === '/.netlify/functions/roster') {
+  if (url.pathname === '/api/roster') {
     const period = url.searchParams.get('period') || '2026-11';
     const file = path.join(root, 'data', `roster-${period}.json`);
     if (!fs.existsSync(file)) { res.writeHead(404); return res.end('{}'); }
@@ -27,7 +28,9 @@ const server = http.createServer((req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     return res.end('404');
   }
-  res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' });
+  const headers = { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' };
+  if (p === '/sw.js') headers['Cache-Control'] = 'no-cache';
+  res.writeHead(200, headers);
   res.end(fs.readFileSync(file));
 });
 

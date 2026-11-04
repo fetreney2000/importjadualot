@@ -1,5 +1,5 @@
 node_modules/
-.netlify/
+.wrangler/
 shots/
 .env
 *.log
