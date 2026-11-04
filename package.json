@@ -1,6 +1,6 @@
 {
   "name": "jadualot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "type": "module",
   "description": "JadualOT — paparan roster kerja lebih masa SPPS-KLM. Tapak statik mobile-first dalam public/ dengan Cloudflare Worker sebagai proksi data.",
@@ -21,6 +21,7 @@
     "roster",
     "jadual",
     "cloudflare-workers",
+    "pwa",
     "spps-klm"
   ],
   "author": "",

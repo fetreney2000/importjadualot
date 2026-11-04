@@ -1,4 +1,7 @@
 # Header untuk aset statik (tidak terpakai pada respons Worker /api/*).
+/sw.js
+  Cache-Control: no-cache
+
 /data/*.json
   Cache-Control: public, max-age=3600
 

@@ -8,6 +8,7 @@ const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
+  '.png': 'image/png',
 };
 
 const server = http.createServer((req, res) => {
@@ -27,7 +28,9 @@ const server = http.createServer((req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     return res.end('404');
   }
-  res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' });
+  const headers = { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' };
+  if (p === '/sw.js') headers['Cache-Control'] = 'no-cache';
+  res.writeHead(200, headers);
   res.end(fs.readFileSync(file));
 });
 

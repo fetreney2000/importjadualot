@@ -38,6 +38,7 @@ const $ = (id) => document.getElementById(id);
 const el = {
   periodSelect: $('periodSelect'), railMeta: $('railMeta'),
   search: $('searchInput'), today: $('todayBtn'), refresh: $('refreshBtn'),
+  install: $('installBtn'),
   statusPill: $('statusPill'), periodLine: $('periodLine'), pageTitle: $('pageTitle'),
   updated: $('updatedLine'), toast: $('toast'), kpis: $('kpis'),
   unitChips: $('unitChips'), changedOnly: $('changedOnly'), dateStrip: $('dateStrip'),
@@ -380,6 +381,10 @@ async function loadPeriod(period) {
     const body = await res.json();
     if (!res.ok || !body.ok) throw new Error((body && body.error) || `HTTP ${res.status}`);
     state.data = body.data;
+    state.offline = res.headers.get('X-Jadualot-Cache') === 'offline';
+    if (state.offline) {
+      toast('Mod luar talian — memaparkan roster terakhir yang disimpan pada peranti ini. Tekan butang muat semula apabila dalam talian.');
+    }
   } catch (err) {
     const res = await fetch(`data/roster-${encodeURIComponent(period)}.json`);
     if (!res.ok) throw new Error('Tiada data luar talian untuk tempoh ini.');
@@ -568,9 +573,13 @@ window.addEventListener('resize', () => {
       if (!res.ok || !body.ok) throw new Error(body?.error || 'API tidak tersedia');
       state.data = body.data;
       state.period = state.data.roster.periodKey;
+      state.offline = res.headers.get('X-Jadualot-Cache') === 'offline';
       localStorage.setItem(LS_PERIOD, state.period);
       renderAll();
       centerTodayChip();
+      if (state.offline) {
+        toast('Mod luar talian — memaparkan roster terakhir yang disimpan pada peranti ini. Tekan butang muat semula apabila dalam talian.', 0);
+      }
       return;
     }
     await loadPeriod(state.period);
@@ -591,3 +600,36 @@ window.addEventListener('resize', () => {
     }
   }
 })();
+
+/* ---------------- PWA ---------------- */
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('sw.js', { scope: './', updateViaCache: 'none' })
+      .catch((err) => console.warn('Service worker tidak didaftarkan:', err));
+  });
+}
+
+let installPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  if (el.install) el.install.hidden = false;
+});
+
+el.install?.addEventListener('click', async () => {
+  if (!installPrompt) return;
+  await installPrompt.prompt();
+  const choice = await installPrompt.userChoice;
+  installPrompt = null;
+  el.install.hidden = true;
+  if (choice.outcome === 'accepted') toast('JadualOT dipasang. Buka daripada skrin utama.');
+});
+
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  if (el.install) el.install.hidden = true;
+  toast('JadualOT dipasang.');
+});
