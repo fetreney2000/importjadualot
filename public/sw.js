@@ -6,7 +6,7 @@
 //   - /data/*.json dan aset shell: stale-while-revalidate
 //   - fon Google: cache-first/stale-while-revalidate
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL_CACHE = `jadualot-shell-${VERSION}`;
 const DATA_CACHE = `jadualot-data-${VERSION}`;
 const API_CACHE = `jadualot-api-${VERSION}`;

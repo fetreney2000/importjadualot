@@ -49,6 +49,44 @@ if (!executablePath) {
   // Mobile: senarai
   await page.screenshot({ path: path.join(OUT, 'mobile-list.png') });
 
+  // Bar tarikh mesti kekal melekat di bawah topbar semasa menatal
+  await page.evaluate(() => window.scrollTo(0, 1400));
+  await new Promise((r) => setTimeout(r, 500));
+  const sticky = await page.evaluate(() => {
+    const nav = document.getElementById('dateNav').getBoundingClientRect();
+    const bar = document.querySelector('.topbar').getBoundingClientRect();
+    return {
+      flush: Math.abs(nav.top - bar.bottom) < 4,
+      active: document.querySelector('.dchip.active')?.dataset.jump || null,
+    };
+  });
+  await page.screenshot({ path: path.join(OUT, 'mobile-list-scrolled.png') });
+
+  // Pemilih tarikh: grid bulan mesti mengandungi semua hari dan boleh melompat
+  const jumpDate = await page.evaluate(() => {
+    const chips = [...document.querySelectorAll('.dchip')];
+    return chips[Math.min(chips.length - 1, 19)]?.dataset.jump || null;
+  });
+  await page.click('#monthBtn');
+  await page.waitForSelector('#monthSheet:not([hidden]) .mday', { timeout: 8000 });
+  await new Promise((r) => setTimeout(r, 300));
+  await page.screenshot({ path: path.join(OUT, 'mobile-month.png') });
+  const month = await page.evaluate(() => ({
+    days: document.querySelectorAll('#monthGrid .mday:not(.pad)').length,
+    title: document.getElementById('monthSheetTitle').textContent,
+  }));
+  await page.click(`#monthGrid [data-jump="${jumpDate}"]`);
+  await new Promise((r) => setTimeout(r, 1500));
+  const jumped = await page.evaluate((date) => {
+    const day = document.querySelector(`#agendaList [data-date="${date}"]`);
+    const nav = document.getElementById('dateNav').getBoundingClientRect();
+    return {
+      closed: document.getElementById('monthSheet').hidden,
+      active: document.querySelector('.dchip.active')?.dataset.jump || null,
+      aligned: day ? Math.abs(day.getBoundingClientRect().top - (nav.bottom + 10)) < 24 : false,
+    };
+  }, jumpDate);
+
   // Mobile: staf
   await page.click('.tabbar [data-tab="staff"]');
   await page.waitForSelector('.staff-card', { timeout: 8000 });
@@ -80,6 +118,18 @@ if (!executablePath) {
   await new Promise((r) => setTimeout(r, 500));
   await page.screenshot({ path: path.join(OUT, 'mobile-me.png') });
 
+  // Kembali ke Senarai: bar tarikh mesti dipaparkan semula dengan tinggi betul
+  await page.click('.tabbar [data-tab="agenda"]');
+  await new Promise((r) => setTimeout(r, 350));
+  const backToAgenda = await page.evaluate(() => {
+    const nav = document.getElementById('dateNav');
+    return {
+      visible: !nav.hidden,
+      height: nav.offsetHeight,
+      varHeight: parseInt(getComputedStyle(document.documentElement).getPropertyValue('--date-nav-h'), 10),
+    };
+  });
+
   // Desktop
   const desk = await browser.newPage();
   await desk.setViewport({ width: 1440, height: 1000, deviceScaleFactor: 1.5 });
@@ -105,6 +155,14 @@ if (!executablePath) {
 
   console.log('ralat konsol:', errors.length ? errors : 'tiada');
   console.log('carian tab staf:', searchVisibleOk(staffUi, searchOk));
+  console.log('jalur tarikh melekat:', sticky.flush ? 'lulus' : 'GAGAL',
+    `(aktif: ${sticky.active || 'tiada'})`);
+  console.log('pemilih tarikh:', month.days ? 'lulus' : 'GAGAL',
+    `(${month.days} hari, ${month.title})`);
+  console.log('lompat tarikh:', jumped.closed && jumped.active === jumpDate && jumped.aligned ? 'lulus' : 'GAGAL',
+    `(aktif: ${jumped.active || 'tiada'}, sejajar: ${jumped.aligned})`);
+  console.log('kembali ke senarai:', backToAgenda.visible && backToAgenda.height > 0 && backToAgenda.varHeight === backToAgenda.height ? 'lulus' : 'GAGAL',
+    `(tinggi: ${backToAgenda.height}, var: ${backToAgenda.varHeight})`);
   console.log('lebar dokumen:', overflow.doc, 'vs tetingkap:', overflow.win,
     overflow.doc > overflow.win ? '→ LIMPAHAN!' : '→ ok');
   for (const f of fs.readdirSync(OUT)) console.log('  ', f, fs.statSync(path.join(OUT, f)).size, 'bytes');

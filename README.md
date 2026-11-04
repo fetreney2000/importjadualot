@@ -5,8 +5,9 @@ Antara muka direka semula sepenuhnya daripada aplikasi Apps Script asal — chro
 neutral, warna hanya untuk data, dan susun atur yang menyesuaikan diri dari
 telefon hingga desktop.
 
-- **Senarai** — agenda syif mengikut hari, jalur tarikh, tapisan unit dan
-  penapis perubahan.
+- **Senarai** — agenda syif mengikut hari, jalur tarikh melekat dengan
+  penunjuk hari aktif, pemilih tarikh bulanan untuk lompat terus, tapisan unit
+  dan penapis perubahan.
 - **Staf** — semua staf dalam tempoh semasa, kad boleh dikembangkan.
 - **Tugas Saya** — pilih nama sekali, peranti mengingatinya, dan hanya syif
   anda dipaparkan.

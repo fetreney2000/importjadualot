@@ -113,6 +113,10 @@
         <section class="page-head">
           <div class="eyebrow-row">
             <span class="pill status" id="statusPill">Memuatkan</span>
+            <label class="period-pick">
+              <span class="sr-only">Tempoh roster</span>
+              <select id="periodSelectMobile" aria-label="Pilih tempoh roster"></select>
+            </label>
             <span class="eyebrow" id="periodLine">—</span>
           </div>
           <h1 id="pageTitle">Roster Kerja Lebih Masa</h1>
@@ -145,7 +149,12 @@
 
         <!-- SENARAI -->
         <section id="view-agenda" aria-label="Senarai syif">
-          <div class="datestrip" id="dateStrip" aria-label="Navigasi tarikh"></div>
+          <div class="date-nav" id="dateNav" hidden>
+            <div class="datestrip" id="dateStrip" aria-label="Navigasi tarikh"></div>
+            <button class="date-jump" id="monthBtn" type="button" aria-label="Pilih tarikh" aria-haspopup="dialog" aria-expanded="false" aria-controls="monthSheet" title="Pilih tarikh">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M8 13.8h.01M12 13.8h.01M16 13.8h.01M8 17.3h.01M12 17.3h.01M16 17.3h.01"/></svg>
+            </button>
+          </div>
 
           <div id="agendaList" class="agenda"></div>
         </section>
@@ -210,6 +219,22 @@
       </button>
     </nav>
   </div>
+
+  <!-- Pemilih tarikh (bottom sheet) -->
+  <div class="sheet-scrim" id="monthScrim" hidden></div>
+  <section class="sheet" id="monthSheet" role="dialog" aria-modal="true" aria-labelledby="monthSheetTitle" hidden>
+    <header class="sheet-head">
+      <strong id="monthSheetTitle">—</strong>
+      <div class="sheet-actions">
+        <button class="btn quiet" id="monthToday" type="button">Hari ini</button>
+        <button class="btn icon quiet" id="monthClose" type="button" aria-label="Tutup pemilih tarikh">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="sheet-weekdays" id="monthWeekdays" aria-hidden="true"></div>
+    <div class="sheet-grid" id="monthGrid"></div>
+  </section>
 
   <script src="app.js" defer></script>
 </body>

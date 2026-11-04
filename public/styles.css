@@ -61,6 +61,7 @@
   --tap: 42px;
   --rail-w: 244px;
   --topbar-h: 57px;
+  --date-nav-h: 90px;
 
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -394,6 +395,24 @@ a:hover { text-decoration: underline; }
   text-transform: uppercase; color: var(--ink-3);
 }
 
+/* Pemilih tempoh pada mudah alih — rail (dan pemilihnya) tersembunyi
+   di bawah 1024px, jadi kawalan yang sama dipaparkan dalam page head. */
+.period-pick { display: inline-flex; align-items: center; max-width: 100%; }
+.period-pick select {
+  min-height: 30px;
+  max-width: 100%;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 11.5px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--sh-1);
+  transition: border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.period-pick select:hover { border-color: var(--line-strong); color: var(--ink); }
+
 h1 {
   font-size: clamp(21px, 4.6vw, 27px);
   font-weight: 700;
@@ -469,8 +488,9 @@ h1 {
 
 .datestrip {
   display: flex; gap: 6px;
-  margin: 0 -14px 18px;
-  padding: 2px 14px 2px;
+  flex: 1 1 auto; min-width: 0;
+  margin: 0;
+  padding: 2px 0;
   overflow-x: auto;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
@@ -481,6 +501,32 @@ h1 {
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
 }
+
+/* Bar navigasi tarikh kekal di bawah topbar supaya hari boleh ditukar
+   tanpa perlu menatal kembali ke atas. */
+.date-nav {
+  position: sticky;
+  top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px));
+  z-index: 20;
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 -14px 18px;
+  padding: 6px 14px 8px;
+  background: var(--canvas);
+}
+
+.date-jump {
+  display: inline-grid; place-items: center;
+  width: 40px; height: 40px; flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+  color: var(--ink-3);
+  box-shadow: var(--sh-1);
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.date-jump:hover { border-color: var(--line-strong); color: var(--ink); }
+.date-jump[aria-expanded="true"] { border-color: var(--ink); background: var(--surface-2); color: var(--ink); }
 
 .dchip {
   flex: 1 0 50px;
@@ -515,6 +561,14 @@ h1 {
 .dchip.today { border-color: var(--ink); }
 .dchip.today .dw { color: var(--ink); }
 .dchip.holiday .dn { color: var(--danger); }
+.dchip.active,
+.dchip.active.today {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+.dchip.active .dw,
+.dchip.active .dn,
+.dchip.active .dc { color: var(--brand); }
 
 /* ============================================================
    Agenda
@@ -522,10 +576,10 @@ h1 {
 
 .agenda { display: grid; gap: 22px; }
 
-.day { scroll-margin-top: calc(var(--topbar-h) + 10px); }
+.day { scroll-margin-top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + var(--date-nav-h) + 10px); }
 
 .day-head {
-  position: sticky; top: var(--topbar-h); z-index: 10;
+  position: sticky; top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + var(--date-nav-h)); z-index: 10;
   display: flex; align-items: center; gap: 8px;
   margin: 0 -14px 10px;
   padding: 9px 14px;
@@ -804,6 +858,68 @@ h1 {
 .tab.active svg { color: var(--brand); }
 
 /* ============================================================
+   Pemilih tarikh (bottom sheet)
+   ============================================================ */
+
+body.sheet-open { overflow: hidden; }
+
+.sheet-scrim {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(9, 11, 17, 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.sheet {
+  position: fixed; left: 50%; bottom: 0; z-index: 61;
+  width: min(100%, 460px);
+  transform: translateX(-50%);
+  padding: 14px 16px calc(18px + env(safe-area-inset-bottom));
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  background: var(--surface);
+  box-shadow: var(--sh-3);
+  animation: sheet-in 0.18s var(--ease);
+}
+@keyframes sheet-in {
+  from { opacity: 0; transform: translate(-50%, 14px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.sheet-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.sheet-head strong { font-size: 15px; letter-spacing: -0.2px; }
+.sheet-actions { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+
+.sheet-weekdays,
+.sheet-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.sheet-weekdays {
+  margin-bottom: 6px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase; color: var(--ink-4);
+  text-align: center;
+}
+
+.mday {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  min-height: 44px; padding: 3px 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.mday:hover:not(:disabled) { background: var(--surface-3); }
+.mday.pad { visibility: hidden; }
+.mday.empty { opacity: 0.4; cursor: default; }
+.mday.today { border-color: var(--ink); }
+.mday.holiday .mday-n { color: var(--danger); }
+.mday.active { background: var(--brand-soft); border-color: var(--brand); }
+.mday-n { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.mday-c { font-size: 8.5px; font-weight: 600; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
    Responsive
    ============================================================ */
 
@@ -819,9 +935,15 @@ h1 {
   .staff-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
   .shift { grid-template-columns: 72px minmax(0, 1fr) auto; padding: 11px 14px; }
   .shift.changed { padding-left: 12px; }
+  .date-nav { margin-inline: 0; padding-inline: 0; }
   .datestrip { margin-inline: 0; padding-inline: 0; }
   .dchip { flex: 1 0 58px; min-width: 58px; }
   .day-head { margin-inline: -6px; padding-inline: 6px; border-radius: 0; }
+  .sheet {
+    bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    border-radius: 20px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -831,6 +953,7 @@ h1 {
   .tabbar { display: none; }
   .topbar-brand { display: none; }
   .topbar { padding: 12px 22px; }
+  .period-pick { display: none; }
   .foot { margin-top: 40px; }
 }
 

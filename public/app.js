@@ -11,6 +11,7 @@ const LS_NAME_LABEL = 'jadualot:myNameLabel';
 const DAYS = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
 const DAYS_SHORT = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
 const MONTHS = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
+const MONTHS_LONG = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'];
 const UNITS = ['AMBU', 'INPA', 'AE', 'PREPACK'];
 
 const STATUS_LABELS = {
@@ -62,12 +63,16 @@ const state = {
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  periodSelect: $('periodSelect'), railMeta: $('railMeta'),
+  periodSelect: $('periodSelect'), periodSelectMobile: $('periodSelectMobile'), railMeta: $('railMeta'),
   search: $('searchInput'), today: $('todayBtn'), refresh: $('refreshBtn'),
   install: $('installBtn'),
   statusPill: $('statusPill'), periodLine: $('periodLine'), pageTitle: $('pageTitle'),
   updated: $('updatedLine'), toast: $('toast'), kpis: $('kpis'),
   unitChips: $('unitChips'), changedOnly: $('changedOnly'), dateStrip: $('dateStrip'),
+  dateNav: $('dateNav'), monthBtn: $('monthBtn'), monthScrim: $('monthScrim'),
+  monthSheet: $('monthSheet'), monthSheetTitle: $('monthSheetTitle'),
+  monthWeekdays: $('monthWeekdays'), monthGrid: $('monthGrid'),
+  monthToday: $('monthToday'), monthClose: $('monthClose'),
   filterBar: $('filterBar'),
   agenda: $('agendaList'), staffGrid: $('staffGrid'),
   mePicker: $('mePicker'), meSelect: $('meSelect'), meSave: $('meSave'),
@@ -183,7 +188,7 @@ function renderHeader() {
 
   el.statusPill.textContent = statusLabel(r.status);
   el.statusPill.dataset.status = r.status;
-  el.periodLine.textContent = `Tempoh ${r.periodKey} · versi ${r.effectiveVersion}`;
+  el.periodLine.textContent = `Versi ${r.effectiveVersion}`;
   el.updated.textContent = state.offline
     ? `Data sandaran · ${r.lastUpdated}`
     : `Dikemas kini ${r.lastUpdated}`;
@@ -227,7 +232,15 @@ function syncFades() {
 
 function renderDateStrip(list) {
   const dates = [...new Set(list.map((a) => a.date))].sort();
-  if (!dates.length) { el.dateStrip.innerHTML = ''; el.dateStrip.classList.remove('fade'); return; }
+  if (!dates.length) {
+    el.dateStrip.innerHTML = '';
+    el.dateStrip.classList.remove('fade');
+    el.dateNav.hidden = true;
+    lastActiveDate = '';
+    syncDateNavHeight();
+    return;
+  }
+  el.dateNav.hidden = false;
   const today = todayStr();
   el.dateStrip.innerHTML = dates.map((d) => {
     const slots = list.filter((a) => a.date === d);
@@ -240,6 +253,59 @@ function renderDateStrip(list) {
   }).join('');
   // pudarkan tepi hanya apabila jalur boleh ditatal
   syncFades();
+  lastActiveDate = '';
+  syncDateNavHeight();
+  requestAnimationFrame(syncActiveDay);
+}
+
+/** Kekalkan tinggi bar tarikh dalam pembolehubah CSS supaya tajuk hari
+    sentiasa melekat tepat di bawahnya, walau apa pun saiz fon. */
+function syncDateNavHeight() {
+  if (el.dateNav.hidden) return;
+  const h = el.dateNav.offsetHeight;
+  // offsetHeight ialah 0 apabila view disembunyikan (tab lain); kekalkan
+  // nilai terakhir supaya kedudukan melekat tidak melompat.
+  if (h > 0) document.documentElement.style.setProperty('--date-nav-h', `${h}px`);
+}
+
+/**
+ * Selaraskan cip tarikh dengan hari yang sedang dilihat semasa menatal.
+ * Menjadikan jalur tarikh (yang kekal di bawah topbar) sebagai penunjuk
+ * kedudukan sekali gus laluan lompat.
+ */
+let lastActiveDate = '';
+
+function syncActiveDay() {
+  if (state.tab !== 'agenda' || !state.data) return;
+  const days = [...el.agenda.querySelectorAll('[data-date]')];
+  if (!days.length) return;
+  const offset = el.dateNav.getBoundingClientRect().bottom + 12;
+  // Hari aktif ialah seksyen pertama yang masih mempunyai kandungan di
+  // bawah garis lekat. Jika tiada (contoh: jurang antara hari), kekalkan
+  // hari terakhir.
+  let current = days[days.length - 1];
+  for (const day of days) {
+    if (day.getBoundingClientRect().bottom > offset) {
+      current = day;
+      break;
+    }
+  }
+  const date = current.dataset.date;
+  if (date === lastActiveDate) return;
+  lastActiveDate = date;
+  el.dateStrip.querySelectorAll('.dchip').forEach((chip) => {
+    chip.classList.toggle('active', chip.dataset.jump === date);
+  });
+  const chip = el.dateStrip.querySelector(`.dchip[data-jump="${date}"]`);
+  if (!chip) return;
+  const left = chip.offsetLeft - el.dateStrip.offsetLeft;
+  const visible = el.dateStrip.scrollLeft;
+  if (left < visible || left + chip.offsetWidth > visible + el.dateStrip.clientWidth) {
+    el.dateStrip.scrollTo({
+      left: Math.max(0, left - (el.dateStrip.clientWidth - chip.offsetWidth) / 2),
+      behavior: 'smooth',
+    });
+  }
 }
 
 function shiftCard(a) {
@@ -411,9 +477,12 @@ function syncFilterBar() {
 
 function renderPeriodSelect() {
   const opts = state.data.rosterOptions || [];
-  el.periodSelect.innerHTML = opts.map((o) =>
+  const html = opts.map((o) =>
     `<option value="${esc(o.periodKey)}">${esc(o.periodKey)} · ${esc(statusLabel(o.status))}</option>`).join('');
+  el.periodSelect.innerHTML = html;
+  el.periodSelectMobile.innerHTML = html;
   el.periodSelect.value = state.period;
+  el.periodSelectMobile.value = state.period;
 }
 
 /* ---------------- data loading ---------------- */
@@ -467,6 +536,10 @@ function setTab(tab) {
   renderHeader();
   if (tab === 'staff') renderStaff();
   if (tab === 'me') renderMe();
+  if (tab === 'agenda') {
+    syncDateNavHeight();
+    requestAnimationFrame(syncActiveDay);
+  }
 }
 
 /** Pusatkan cip "hari ini" hanya jika ia belum kelihatan sepenuhnya. */
@@ -486,8 +559,10 @@ function centerTodayChip() {
 function scrollToDate(date) {
   const mount = state.tab === 'me' ? el.meList : el.agenda;
   const target = mount.querySelector(`[data-date="${date}"]`);
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  else if (state.data) toast(`Tiada slot pada ${fmtLong(date)} dalam tempoh ${state.period}.`);
+  if (target) {
+    lastActiveDate = '';
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (state.data) toast(`Tiada slot pada ${fmtLong(date)} dalam tempoh ${state.period}.`);
 }
 
 function scrollToToday(smooth = true) {
@@ -504,6 +579,72 @@ function scrollToToday(smooth = true) {
   const dates = [...mount.querySelectorAll('[data-date]')].map((n) => n.dataset.date).sort();
   const next = dates.find((d) => d >= today);
   if (next) mount.querySelector(`[data-date="${next}"]`).scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+}
+
+/* ---------------- pemilih tarikh ---------------- */
+
+/** Bina grid bulan untuk tempoh semasa, dengan kiraan slot setiap hari. */
+function buildMonthSheet() {
+  if (!state.data) return;
+  const [year, month] = state.data.roster.periodKey.split('-').map(Number);
+  const counts = new Map();
+  for (const a of filtered()) counts.set(a.date, (counts.get(a.date) || 0) + 1);
+  const holidays = new Set(
+    state.data.assignments
+      .filter((a) => a.dayType === 'PUBLIC_HOLIDAY')
+      .map((a) => a.date),
+  );
+  const today = todayStr();
+  const startPad = new Date(year, month - 1, 1).getDay();
+  const dayCount = new Date(year, month, 0).getDate();
+  const cells = [];
+
+  for (let i = 0; i < startPad; i += 1) {
+    cells.push('<span class="mday pad" aria-hidden="true"></span>');
+  }
+  for (let day = 1; day <= dayCount; day += 1) {
+    const date = `${year}-${pad(month)}-${pad(day)}`;
+    const n = counts.get(date) || 0;
+    const cls = ['mday'];
+    if (!n) cls.push('empty');
+    if (date === today) cls.push('today');
+    if (date === lastActiveDate) cls.push('active');
+    if (holidays.has(date)) cls.push('holiday');
+    cells.push(`<button class="${cls.join(' ')}" data-jump="${date}" type="button"${n ? '' : ' disabled'} aria-label="${esc(weekday(date))} ${esc(fmtLong(date))}, ${n ? `${n} slot` : 'tiada slot'}">
+      <span class="mday-n">${day}</span>
+      <span class="mday-c">${n || '—'}</span>
+    </button>`);
+  }
+
+  el.monthGrid.innerHTML = cells.join('');
+  el.monthSheetTitle.textContent = `${MONTHS_LONG[month - 1]} ${year}`;
+  el.monthWeekdays.innerHTML = DAYS_SHORT.map((d) => `<span>${esc(d.slice(0, 2))}</span>`).join('');
+}
+
+let monthFocus = null;
+const appRoot = document.querySelector('.app');
+
+function openMonthSheet() {
+  if (!state.data) return;
+  buildMonthSheet();
+  monthFocus = document.activeElement;
+  el.monthScrim.hidden = false;
+  el.monthSheet.hidden = false;
+  el.monthBtn.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('sheet-open');
+  if (appRoot) appRoot.inert = true;
+  requestAnimationFrame(() => el.monthClose.focus());
+}
+
+function closeMonthSheet() {
+  if (el.monthSheet.hidden) return;
+  el.monthSheet.hidden = true;
+  el.monthScrim.hidden = true;
+  el.monthBtn.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('sheet-open');
+  if (appRoot) appRoot.inert = false;
+  if (monthFocus && typeof monthFocus.focus === 'function') monthFocus.focus();
+  monthFocus = null;
 }
 
 /* ---------------- events ---------------- */
@@ -532,6 +673,22 @@ el.dateStrip.addEventListener('click', (e) => {
   scrollToDate(chip.dataset.jump);
 });
 
+el.monthBtn.addEventListener('click', openMonthSheet);
+el.monthClose.addEventListener('click', closeMonthSheet);
+el.monthScrim.addEventListener('click', closeMonthSheet);
+
+el.monthToday.addEventListener('click', () => {
+  closeMonthSheet();
+  scrollToToday(true);
+});
+
+el.monthGrid.addEventListener('click', (e) => {
+  const cell = e.target.closest('[data-jump]');
+  if (!cell || cell.disabled) return;
+  closeMonthSheet();
+  scrollToDate(cell.dataset.jump);
+});
+
 let searchTimer;
 el.search.addEventListener('input', () => {
   clearTimeout(searchTimer);
@@ -555,12 +712,15 @@ el.changedOnly.addEventListener('click', () => {
   renderAgenda(el.agenda, list);
 });
 
-el.periodSelect.addEventListener('change', () => {
-  loadPeriod(el.periodSelect.value).catch((err) => {
+function requestPeriod(select) {
+  loadPeriod(select.value).catch((err) => {
     toast(`Gagal memuatkan tempoh: ${err.message}`, 0);
-    el.periodSelect.value = state.period;
+    select.value = state.period;
   });
-});
+}
+
+el.periodSelect.addEventListener('change', () => requestPeriod(el.periodSelect));
+el.periodSelectMobile.addEventListener('change', () => requestPeriod(el.periodSelectMobile));
 
 el.refresh.addEventListener('click', () => {
   el.refresh.animate?.([{ transform: 'rotate(0)' }, { transform: 'rotate(360deg)' }], { duration: 500, easing: 'ease-out' });
@@ -601,6 +761,10 @@ el.meChange.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !el.monthSheet.hidden) {
+    closeMonthSheet();
+    return;
+  }
   if (e.key === '/' && document.activeElement !== el.search && !/input|select|textarea/i.test(document.activeElement.tagName)) {
     e.preventDefault();
     setTab('agenda');
@@ -617,8 +781,21 @@ document.addEventListener('keydown', (e) => {
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(syncFades, 120);
+  resizeTimer = setTimeout(() => {
+    syncFades();
+    syncDateNavHeight();
+    syncActiveDay();
+  }, 120);
 });
+
+let spyFrame = 0;
+window.addEventListener('scroll', () => {
+  if (state.tab !== 'agenda' || spyFrame) return;
+  spyFrame = requestAnimationFrame(() => {
+    spyFrame = 0;
+    syncActiveDay();
+  });
+}, { passive: true });
 
 /* ---------------- boot ---------------- */
 
